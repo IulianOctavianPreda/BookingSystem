@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{F7064C0F-FA6B-4D98-AE27-CA2C4F3BBDDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{4C9DB40F-40CD-4142-926C-E1B92AF4EFEC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7064C0F-FA6B-4D98-AE27-CA2C4F3BBDDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7064C0F-FA6B-4D98-AE27-CA2C4F3BBDDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7064C0F-FA6B-4D98-AE27-CA2C4F3BBDDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7064C0F-FA6B-4D98-AE27-CA2C4F3BBDDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C9DB40F-40CD-4142-926C-E1B92AF4EFEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C9DB40F-40CD-4142-926C-E1B92AF4EFEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C9DB40F-40CD-4142-926C-E1B92AF4EFEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C9DB40F-40CD-4142-926C-E1B92AF4EFEC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

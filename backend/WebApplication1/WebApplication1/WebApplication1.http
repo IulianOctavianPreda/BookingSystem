@@ -1,0 +1,193 @@
+@AppointmentSystem_HostAddress = http://localhost:5102
+
+### Variables (Update these with actual IDs from your responses)
+@userId = 9be3343f-6881-4019-b0dd-2b87ccb2a393
+@appointmentId = ed0f500b-7697-4a5d-a3ac-c3eaee912418
+
+####################
+### USERS API
+####################
+
+### Get All Users
+GET {{AppointmentSystem_HostAddress}}/api/users
+Accept: application/json
+
+###
+
+### Get User By ID
+GET {{AppointmentSystem_HostAddress}}/api/users/{{userId}}
+Accept: application/json
+
+###
+
+### Create New User
+POST {{AppointmentSystem_HostAddress}}/api/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com"
+}
+
+###
+
+### Update User
+PUT {{AppointmentSystem_HostAddress}}/api/users/{{userId}}
+Content-Type: application/json
+
+{
+  "name": "John Updated",
+  "email": "john.updated@example.com"
+}
+
+###
+
+### Delete User
+DELETE {{AppointmentSystem_HostAddress}}/api/users/{{userId}}
+
+###
+
+### Get User's Appointments
+GET {{AppointmentSystem_HostAddress}}/api/users/{{userId}}/appointments
+Accept: application/json
+
+###
+
+####################
+### APPOINTMENTS API
+####################
+
+### Get All Appointments
+GET {{AppointmentSystem_HostAddress}}/api/appointments
+Accept: application/json
+
+###
+
+### Get Appointment By ID
+GET {{AppointmentSystem_HostAddress}}/api/appointments/{{appointmentId}}
+Accept: application/json
+
+###
+
+### Create New Appointment
+POST {{AppointmentSystem_HostAddress}}/api/appointments
+Content-Type: application/json
+
+{
+  "dateAndTime": "2025-09-15T14:30:00",
+  "userId": "{{userId}}"
+}
+
+###
+
+### Update Appointment
+PUT {{AppointmentSystem_HostAddress}}/api/appointments/{{appointmentId}}
+Content-Type: application/json
+
+{
+  "dateAndTime": "2025-09-15T16:00:00"
+}
+
+###
+
+### Delete Appointment
+DELETE {{AppointmentSystem_HostAddress}}/api/appointments/{{appointmentId}}
+
+###
+
+### Get Upcoming Appointments
+GET {{AppointmentSystem_HostAddress}}/api/appointments/upcoming
+Accept: application/json
+
+###
+
+### Get Appointments by Date
+GET {{AppointmentSystem_HostAddress}}/api/appointments/by-date/2025-09-15
+Accept: application/json
+
+###
+
+####################
+### TEST SCENARIOS
+####################
+
+### Test 1: Create User and Appointment Flow
+POST {{AppointmentSystem_HostAddress}}/api/users
+Content-Type: application/json
+
+{
+  "name": "Jane Smith",
+  "email": "jane.smith@test.com"
+}
+
+###
+
+### Test 2: Try to create user with duplicate email (should fail)
+POST {{AppointmentSystem_HostAddress}}/api/users
+Content-Type: application/json
+
+{
+  "name": "Jane Duplicate",
+  "email": "jane.smith@test.com"
+}
+
+###
+
+### Test 3: Try to create appointment with non-existent user (should fail)
+POST {{AppointmentSystem_HostAddress}}/api/appointments
+Content-Type: application/json
+
+{
+  "dateAndTime": "2025-09-15T10:00:00",
+  "userId": "00000000-0000-0000-0000-000000000000"
+}
+
+###
+
+### Test 4: Try to create appointment in the past (should fail)
+POST {{AppointmentSystem_HostAddress}}/api/appointments
+Content-Type: application/json
+
+{
+  "dateAndTime": "2023-01-01T10:00:00",
+  "userId": "{{userId}}"
+}
+
+###
+
+####################
+### SAMPLE DATA CREATION
+####################
+
+### Create Sample User 1
+POST {{AppointmentSystem_HostAddress}}/api/users
+Content-Type: application/json
+
+{
+  "name": "Alice Johnson",
+  "email": "alice.johnson@example.com"
+}
+
+###
+
+### Create Sample User 2
+POST {{AppointmentSystem_HostAddress}}/api/users
+Content-Type: application/json
+
+{
+  "name": "Bob Wilson",
+  "email": "bob.wilson@example.com"
+}
+
+###
+
+### Create Sample User 3
+POST {{AppointmentSystem_HostAddress}}/api/users
+Content-Type: application/json
+
+{
+  "name": "Carol Davis",
+  "email": "carol.davis@example.com"
+}
+
+###
