@@ -1,4 +1,7 @@
+using AutoMapper;
 using Database;
+using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
+using WebApplication1.Mapping;
 
 namespace WebApplication1;
 
@@ -16,9 +19,12 @@ public static class Program
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
         
-        Context.AddDbContext(builder.Services, builder.Configuration.GetConnectionString("DefaultConnection"));
-
+        ContextDb.AddDbContext(builder.Services, builder.Configuration.GetConnectionString("DefaultConnection"));
+        builder.Services.AddAutoMapper(cfg => AutoMappingProfile.UseAutoMappingProfile(cfg));
+        
         var app = builder.Build();
+
+        ContextDb.Seed(app.Services).GetAwaiter().GetResult();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())

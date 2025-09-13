@@ -1,55 +1,169 @@
-@AppointmentSystem_HostAddress = http://localhost:5102
+@HostAddress = http://localhost:5102
 
-### Variables (Update these with actual IDs from your responses)
-@userId = 9be3343f-6881-4019-b0dd-2b87ccb2a393
-@appointmentId = ed0f500b-7697-4a5d-a3ac-c3eaee912418
+@barberId = BADA9649-8EB3-4ABB-AFA7-BF3718DE1948
+@customerId = F23D5497-219B-45DB-B91A-CDA781250130
+@appointmentId = 00000000-0000-0000-0000-000000000000
 
 ####################
-### USERS API
+### BARBERS API
 ####################
 
-### Get All Users
-GET {{AppointmentSystem_HostAddress}}/api/users
+### Get All Barbers
+GET {{HostAddress}}/api/barbers
 Accept: application/json
 
 ###
 
-### Get User By ID
-GET {{AppointmentSystem_HostAddress}}/api/users/{{userId}}
+### Get Barber By ID
+GET {{HostAddress}}/api/barbers/{{barberId}}
 Accept: application/json
 
 ###
 
-### Create New User
-POST {{AppointmentSystem_HostAddress}}/api/users
+### Create New Barber
+POST {{HostAddress}}/api/barbers
+Content-Type: application/json
+
+{
+  "name": "Mike Johnson",
+  "email": "mike@barbershop.com",
+  "phone": "555-0101",
+  "specialties": "Haircuts, Fades, Styling"
+}
+
+###
+
+### Update Barber
+PUT {{HostAddress}}/api/barbers/{{barberId}}
+Content-Type: application/json
+
+{
+  "name": "Mike Johnson Updated",
+  "email": "mike.updated@barbershop.com",
+  "phone": "555-0101",
+  "specialties": "Haircuts, Fades, Styling, Color"
+}
+
+###
+
+### Update Barber Schedule
+PUT {{HostAddress}}/api/barbers/{{barberId}}/schedule
+Content-Type: application/json
+
+{
+  "weeklySchedule": [
+    {
+      "dayOfWeek": "Monday",
+      "startTime": "09:00",
+      "endTime": "17:00",
+      "isWorking": true
+    },
+    {
+      "dayOfWeek": "Tuesday",
+      "startTime": "09:00",
+      "endTime": "17:00",
+      "isWorking": true
+    },
+    {
+      "dayOfWeek": "Wednesday",
+      "startTime": "09:00",
+      "endTime": "17:00",
+      "isWorking": true
+    },
+    {
+      "dayOfWeek": "Thursday",
+      "startTime": "09:00",
+      "endTime": "17:00",
+      "isWorking": true
+    },
+    {
+      "dayOfWeek": "Friday",
+      "startTime": "09:00",
+      "endTime": "17:00",
+      "isWorking": true
+    },
+    {
+      "dayOfWeek": "Saturday",
+      "startTime": "10:00",
+      "endTime": "15:00",
+      "isWorking": true
+    },
+    {
+      "dayOfWeek": "Sunday",
+      "startTime": "09:00",
+      "endTime": "17:00",
+      "isWorking": false
+    }
+  ]
+}
+
+###
+
+### Get Available Barbers for Date
+GET {{HostAddress}}/api/barbers/available/2025-09-15
+Accept: application/json
+
+###
+
+### Get Available Time Slots for Barber
+GET {{HostAddress}}/api/barbers/{{barberId}}/slots/2025-09-15
+Accept: application/json
+
+###
+
+### Delete Barber (Soft Delete - Mark Inactive)
+DELETE {{HostAddress}}/api/barbers/{{barberId}}
+
+###
+
+####################
+### CUSTOMERS API
+####################
+
+### Get All Customers
+GET {{HostAddress}}/api/customers
+Accept: application/json
+
+###
+
+### Get Customer By ID
+GET {{HostAddress}}/api/customers/{{customerId}}
+Accept: application/json
+
+###
+
+### Create New Customer
+POST {{HostAddress}}/api/customers
 Content-Type: application/json
 
 {
   "name": "John Doe",
-  "email": "john.doe@example.com"
+  "email": "john.doe@example.com",
+  "phone": "555-1001"
 }
 
 ###
 
-### Update User
-PUT {{AppointmentSystem_HostAddress}}/api/users/{{userId}}
+### Update Customer
+PUT {{HostAddress}}/api/customers/{{customerId}}
 Content-Type: application/json
 
 {
-  "name": "John Updated",
-  "email": "john.updated@example.com"
+  "name": "John Doe Updated",
+  "email": "john.updated@example.com",
+  "phone": "555-1001"
 }
 
 ###
 
-### Delete User
-DELETE {{AppointmentSystem_HostAddress}}/api/users/{{userId}}
+### Search Customers
+GET {{HostAddress}}/api/customers/search/John
+Accept: application/json
 
 ###
 
-### Get User's Appointments
-GET {{AppointmentSystem_HostAddress}}/api/users/{{userId}}/appointments
-Accept: application/json
+### Delete Customer
+DELETE {{HostAddress}}/api/customers/{{customerId}}
 
 ###
 
@@ -58,51 +172,86 @@ Accept: application/json
 ####################
 
 ### Get All Appointments
-GET {{AppointmentSystem_HostAddress}}/api/appointments
+GET {{HostAddress}}/api/appointments
 Accept: application/json
 
 ###
 
 ### Get Appointment By ID
-GET {{AppointmentSystem_HostAddress}}/api/appointments/{{appointmentId}}
+GET {{HostAddress}}/api/appointments/{{appointmentId}}
 Accept: application/json
 
 ###
 
 ### Create New Appointment
-POST {{AppointmentSystem_HostAddress}}/api/appointments
+POST {{HostAddress}}/api/appointments
 Content-Type: application/json
 
 {
-  "dateAndTime": "2025-09-15T14:30:00",
-  "userId": "{{userId}}"
+  "startTime": "2025-09-15T15:30:00",
+  "customerId": "{{customerId}}",
+  "barberId": "{{barberId}}",
+  "serviceType": "Haircut",
+  "notes": "Regular customer, prefers fade"
+}
+
+###
+
+### Create Appointment with Both Services (60 minutes)
+POST {{HostAddress}}/api/appointments
+Content-Type: application/json
+
+{
+  "startTime": "2025-09-16T10:00:00", 
+  "customerId": "{{customerId}}",
+  "barberId": "{{barberId}}",
+  "serviceType": "Both",
+  "notes": "Haircut and beard trim"
 }
 
 ###
 
 ### Update Appointment
-PUT {{AppointmentSystem_HostAddress}}/api/appointments/{{appointmentId}}
+PUT {{HostAddress}}/api/appointments/{{appointmentId}}
 Content-Type: application/json
 
 {
-  "dateAndTime": "2025-09-15T16:00:00"
+  "startTime": "2025-09-15T16:00:00",
+  "customerId": "{{customerId}}",
+  "barberId": "{{barberId}}",
+  "serviceType": "Beard",
+  "notes": "Rescheduled appointment"
 }
 
 ###
 
-### Delete Appointment
-DELETE {{AppointmentSystem_HostAddress}}/api/appointments/{{appointmentId}}
+### Update Appointment Status
+PUT {{HostAddress}}/api/appointments/{{appointmentId}}/status
+Content-Type: application/json
+
+"Completed"
 
 ###
 
-### Get Upcoming Appointments
-GET {{AppointmentSystem_HostAddress}}/api/appointments/upcoming
+### Delete Appointment
+DELETE {{HostAddress}}/api/appointments/{{appointmentId}}
+
+###
+
+### Get Appointments by Barber
+GET {{HostAddress}}/api/appointments/barber/{{barberId}}
 Accept: application/json
 
 ###
 
-### Get Appointments by Date
-GET {{AppointmentSystem_HostAddress}}/api/appointments/by-date/2025-09-15
+### Get Today's Appointments
+GET {{HostAddress}}/api/appointments/today
+Accept: application/json
+
+###
+
+### Get Upcoming Appointments
+GET {{HostAddress}}/api/appointments/upcoming
 Accept: application/json
 
 ###
@@ -111,46 +260,106 @@ Accept: application/json
 ### TEST SCENARIOS
 ####################
 
-### Test 1: Create User and Appointment Flow
-POST {{AppointmentSystem_HostAddress}}/api/users
+### Test 1: Complete Booking Flow
+# Step 1: Create a customer
+POST {{HostAddress}}/api/customers
 Content-Type: application/json
 
 {
   "name": "Jane Smith",
-  "email": "jane.smith@test.com"
+  "email": "jane.smith@test.com",
+  "phone": "555-2001"
 }
 
 ###
 
-### Test 2: Try to create user with duplicate email (should fail)
-POST {{AppointmentSystem_HostAddress}}/api/users
+# Step 2: Get available barbers for a date
+GET {{HostAddress}}/api/barbers/available/2025-09-16
+Accept: application/json
+
+###
+
+# Step 3: Get available slots for chosen barber
+# (Update barberId with one from step 2)
+GET {{HostAddress}}/api/barbers/{{barberId}}/slots/2025-09-16
+Accept: application/json
+
+###
+
+# Step 4: Book appointment
+POST {{HostAddress}}/api/appointments
 Content-Type: application/json
 
 {
-  "name": "Jane Duplicate",
-  "email": "jane.smith@test.com"
+  "startTime": "2025-09-16T11:00:00",
+  "customerId": "{{customerId}}",
+  "barberId": "{{barberId}}",
+  "serviceType": "Haircut"
 }
 
 ###
 
-### Test 3: Try to create appointment with non-existent user (should fail)
-POST {{AppointmentSystem_HostAddress}}/api/appointments
+### Test 2: Try to create barber with duplicate email (should fail)
+POST {{HostAddress}}/api/barbers
 Content-Type: application/json
 
 {
-  "dateAndTime": "2025-09-15T10:00:00",
-  "userId": "00000000-0000-0000-0000-000000000000"
+  "name": "Mike Duplicate",
+  "email": "mike@barbershop.com",
+  "phone": "555-0999",
+  "specialties": "Duplicate Test"
 }
 
 ###
 
-### Test 4: Try to create appointment in the past (should fail)
-POST {{AppointmentSystem_HostAddress}}/api/appointments
+### Test 3: Try to book appointment outside barber's working hours (should fail)
+POST {{HostAddress}}/api/appointments
 Content-Type: application/json
 
 {
-  "dateAndTime": "2023-01-01T10:00:00",
-  "userId": "{{userId}}"
+  "startTime": "2025-09-14T20:00:00",
+  "customerId": "{{customerId}}",
+  "barberId": "{{barberId}}",
+  "serviceType": "Haircut"
+}
+
+###
+
+### Test 4: Try to book appointment in the past (should fail)
+POST {{HostAddress}}/api/appointments
+Content-Type: application/json
+
+{
+  "startTime": "2023-01-01T10:00:00",
+  "customerId": "{{customerId}}",
+  "barberId": "{{barberId}}",
+  "serviceType": "Haircut"
+}
+
+###
+
+### Test 5: Try to book conflicting appointment (should fail)
+POST {{HostAddress}}/api/appointments
+Content-Type: application/json
+
+{
+  "startTime": "2025-09-16T11:00:00",
+  "customerId": "{{customerId}}",
+  "barberId": "{{barberId}}",
+  "serviceType": "Beard"
+}
+
+###
+
+### Test 6: Try to book with non-existent customer (should fail)
+POST {{HostAddress}}/api/appointments
+Content-Type: application/json
+
+{
+  "startTime": "2025-09-16T15:00:00",
+  "customerId": "00000000-0000-0000-0000-000000000000",
+  "barberId": "{{barberId}}",
+  "serviceType": "Haircut"
 }
 
 ###
@@ -159,35 +368,121 @@ Content-Type: application/json
 ### SAMPLE DATA CREATION
 ####################
 
-### Create Sample User 1
-POST {{AppointmentSystem_HostAddress}}/api/users
+### Create Sample Barber 1
+POST {{HostAddress}}/api/barbers
+Content-Type: application/json
+
+{
+  "name": "Mike Johnson",
+  "email": "mike@barbershop.com",
+  "phone": "555-0101",
+  "specialties": "Haircuts, Fades, Styling"
+}
+
+###
+
+### Create Sample Barber 2
+POST {{HostAddress}}/api/barbers
+Content-Type: application/json
+
+{
+  "name": "Sarah Smith",
+  "email": "sarah@barbershop.com",
+  "phone": "555-0102",
+  "specialties": "Haircuts, Beards, Color"
+}
+
+###
+
+### Create Sample Customer 1
+POST {{HostAddress}}/api/customers
 Content-Type: application/json
 
 {
   "name": "Alice Johnson",
-  "email": "alice.johnson@example.com"
+  "email": "alice.johnson@example.com",
+  "phone": "555-3001"
 }
 
 ###
 
-### Create Sample User 2
-POST {{AppointmentSystem_HostAddress}}/api/users
+### Create Sample Customer 2
+POST {{HostAddress}}/api/customers
 Content-Type: application/json
 
 {
   "name": "Bob Wilson",
-  "email": "bob.wilson@example.com"
+  "email": "bob.wilson@example.com",
+  "phone": "555-3002"
 }
 
 ###
 
-### Create Sample User 3
-POST {{AppointmentSystem_HostAddress}}/api/users
+### Create Sample Customer 3
+POST {{HostAddress}}/api/customers
 Content-Type: application/json
 
 {
   "name": "Carol Davis",
-  "email": "carol.davis@example.com"
+  "email": "carol.davis@example.com",
+  "phone": "555-3003"
+}
+
+###
+
+####################
+### WORKFLOW EXAMPLES
+####################
+
+### Example: Set Custom Schedule for Weekend Barber
+POST {{HostAddress}}/api/barbers
+Content-Type: application/json
+
+{
+  "name": "Weekend Tony",
+  "email": "tony@barbershop.com",
+  "phone": "555-0103",
+  "specialties": "Weekend Specialist"
+}
+
+###
+
+### Example: Book Multiple Services
+# 30-minute Haircut
+POST {{HostAddress}}/api/appointments
+Content-Type: application/json
+
+{
+  "startTime": "2025-09-17T09:00:00",
+  "customerId": "{{customerId}}",
+  "barberId": "{{barberId}}",
+  "serviceType": "Haircut"
+}
+
+###
+
+# 30-minute Beard service  
+POST {{HostAddress}}/api/appointments
+Content-Type: application/json
+
+{
+  "startTime": "2025-09-17T10:00:00", 
+  "customerId": "{{customerId}}",
+  "barberId": "{{barberId}}",
+  "serviceType": "Beard"
+}
+
+###
+
+# 60-minute Both services
+POST {{HostAddress}}/api/appointments
+Content-Type: application/json
+
+{
+  "startTime": "2025-09-17T14:00:00",
+  "customerId": "{{customerId}}",
+  "barberId": "{{barberId}}",
+  "serviceType": "Both"
 }
 
 ###
